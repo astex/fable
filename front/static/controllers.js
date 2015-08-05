@@ -73,58 +73,6 @@ angular.module('controllers', ['models'])
       };
     }
   ])
-  .controller('DeploymentController', [
-    '$routeParams', '$rootScope', '$scope', '$http', '$q', '$filter',
-    'apiURL', 'session', 'error', 'models',
-    function (
-        $p, $s_root, $s, $http, $q, $f,
-        apiURL, session, error, M
-      ) {
-      error.clear();
-      session.load();
-      $s_root.header_class = 'under';
-
-      // Define DOM methods.
-      $s.editCollection = function(collection) {
-        collection.editing = true;
-        collection.expanded = true;
-      };
-      $s.cancelEditingCollection = function(collection) {
-        collection.editing = false;
-      };
-      $s.toggle = function(m) { m.expanded = !m.expanded; };
-
-      // Define and fetch models.
-      $s.deployment = (new M.Deployment()).set({id: $p.deployment_id});
-      $s.deployment.fetchAll()
-        .then(function() {
-          // Define utility methods.
-          $s.newCollection = function() {
-            var collection = new M.Collection();
-            collection.editing = collection.expanded = true;
-            return (collection.save()
-              .then(function() { $s.deployment.collections.models.push(collection); }));
-          };
-
-          $s.newStory = function(collection) {
-            var story = ((new M.Story())
-              .set({collection_id: collection.id}));
-            return (story.save()
-              .then(function() { $s.deployment.stories.models.push(story); })
-              .then(function() { collection.stories.push(story); }));
-          };
-
-          $s.newTarget = function(story) {
-            var target = ((new M.Target())
-              .set({story_id: story.id}));
-            return (target.save()
-              .then(function() { $s.deployment.targets.models.push(target); })
-              .then(function() { story.targets.push(target); }));
-          };
-        })
-        .catch(error.raise);
-    }
-  ])
   .controller('CalendarController', [
     '$routeParams', '$rootScope', '$scope', '$http', '$filter',
     'apiURL', 'session', 'error', 'models',
@@ -186,6 +134,58 @@ angular.module('controllers', ['models'])
               .set({target: day.format()})
               .save()
               .then(function() { location.href = getUrl(); });
+          };
+        })
+        .catch(error.raise);
+    }
+  ])
+  .controller('DeploymentController', [
+    '$routeParams', '$rootScope', '$scope', '$http', '$q', '$filter',
+    'apiURL', 'session', 'error', 'models',
+    function (
+        $p, $s_root, $s, $http, $q, $f,
+        apiURL, session, error, M
+      ) {
+      error.clear();
+      session.load();
+      $s_root.header_class = 'under';
+
+      // Define DOM methods.
+      $s.editCollection = function(collection) {
+        collection.editing = true;
+        collection.expanded = true;
+      };
+      $s.cancelEditingCollection = function(collection) {
+        collection.editing = false;
+      };
+      $s.toggle = function(m) { m.expanded = !m.expanded; };
+
+      // Define and fetch models.
+      $s.deployment = (new M.Deployment()).set({id: $p.deployment_id});
+      $s.deployment.fetchAll()
+        .then(function() {
+          // Define utility methods.
+          $s.newCollection = function() {
+            var collection = new M.Collection();
+            collection.editing = collection.expanded = true;
+            return (collection.save()
+              .then(function() { $s.deployment.collections.models.push(collection); }));
+          };
+
+          $s.newStory = function(collection) {
+            var story = ((new M.Story())
+              .set({collection_id: collection.id}));
+            return (story.save()
+              .then(function() { $s.deployment.stories.models.push(story); })
+              .then(function() { collection.stories.push(story); }));
+          };
+
+          $s.newTarget = function(story) {
+            var target = ((new M.Target())
+              .set({story_id: story.id}));
+            return (target.save()
+              .then(function() { $s.deployment.targets.models.push(target); })
+              .then(function() { story.targets.push(target); }));
           };
         })
         .catch(error.raise);
