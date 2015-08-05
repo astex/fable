@@ -16,6 +16,6 @@ angular.module('app', ['ngRoute', 'config', 'controllers'])
           templateUrl: 'templates/calendar.html',
           controller: 'CalendarController'
         })
-        .otherwise({redirectTo: '/deployment'});
+        .otherwise({redirectTo: '/login'});
     }
   ]);
