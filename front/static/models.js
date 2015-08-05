@@ -1,4 +1,4 @@
-angular.module('models', ['config'])
+angular.module('models', ['config', 'filters'])
   .factory('classes', [function() {
     var C = {};
 

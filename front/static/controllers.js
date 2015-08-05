@@ -1,4 +1,4 @@
-angular.module('controllers', ['models'])
+angular.module('controllers', ['models', 'tools', 'filters'])
   .controller('LoginController', [
     '$rootScope', '$scope', '$routeParams',
     'session', 'error', 'models',
