@@ -3,8 +3,22 @@ angular.module('controllers', ['models', 'tools', 'filters'])
     '$rootScope', '$scope', '$routeParams',
     'session', 'error', 'models',
     function($s_root, $s, $p, session, error, M) {
+      var redirect = function() {
+        var next = $p.next;
+        if (next)
+          next = decodeURIComponent(next);
+        if (!(next && next[0] == '#'))
+          next = '#/calendar/' + moment().format('YYYY/MM');
+        window.location.href = next;
+      };
+
       error.clear();
-      session.load();
+      session
+        .load()
+        .then(function() {
+          if ($s_root.session.data.user_id)
+            redirect();
+        });
 
       $s_root.header_class = 'full';
       $s.form = 'login';
@@ -49,15 +63,8 @@ angular.module('controllers', ['models', 'tools', 'filters'])
             password: $s.user.data.password
           })
           .save()
-          .then(function() {
-            var next = $p.next;
-            if (next)
-              next = decodeURIComponent(next);
-            if (!(next && next[0] == '#'))
-              next = '#/calendar/' + moment().format('YYYY/MM');
-            window.location.href = next;
-          }))
-          .catch(function(r) { $s.form_errors = r.data.data; });
+          .then(redirect)
+          .catch(function(r) { $s.form_errors = r.data.data; }));
       };
       $s.signup = function() {
         ['email', 'name', 'password', 'confirm'].some(function(f) {
