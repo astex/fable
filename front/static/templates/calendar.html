@@ -1,0 +1,72 @@
+<div class="header text-inverted">Here's a calendar of deployments:</div>
+
+<div class="c_month">
+  <div
+    class="month clickable peak"
+    ng-class="{
+      'far-left': next == 'right',
+      left: !next,
+      center: next == 'left'
+    }"
+    ng-click="backward()"
+    >
+    <i class="icon-left" ng-show="!next"></i>
+  </div>
+  <div
+    class="month"
+    ng-class="{
+      left: next == 'right',
+      center: !next,
+      right: next == 'left',
+    }"
+    >
+    <div ng-show="!next">
+      <h2>
+        {{ month | dtFormat: 'MMMM' }}
+        <small>{{ month | dtFormat: 'YYYY' }}</small>
+      </h2>
+      <table>
+        <thead>
+          <tr>
+            <th>S</th>
+            <th>M</th>
+            <th>T</th>
+            <th>W</th>
+            <th>T</th>
+            <th>F</th>
+            <th>S</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="week in weeks">
+            <td
+              ng-repeat="day in week"
+              ng-class="{
+                deployment: deployments.getByDay(day),
+                gray: day.format('MM') != month.format('MM'),
+                clickable: (
+                  day.format('MM') == month.format('MM') &&
+                  (deployments.getByDay(day) || session.user.data.is_admin)
+                ),
+                teal: day.format('L') == moment().format('L')
+              }"
+              ng-click="clickDay(day)"
+              >
+              {{ day | dtFormat: 'D' }}
+            </td>
+          </tr>
+      </table>
+    </div>
+  </div>
+  <div
+    class="month clickable peak"
+    ng-class="{
+      center: next == 'right',
+      right: !next,
+      'far-right': next == 'left'
+    }"
+    ng-click="forward()"
+    >
+    <i class="icon-right" ng-show="!next"></i>
+  </div>
+</div>

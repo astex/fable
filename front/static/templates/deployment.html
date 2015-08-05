@@ -1,0 +1,168 @@
+<div class="text-inverted header">
+  Here are the available and executed collections for the deployment on
+  {{ deployment.data.target | dtFormat: 'LL' }}:
+</div>
+<div class="c_collection"><!--
+  --><div class="collection"
+    ng-class="{
+      expanded: collection.expanded,
+      editing: collection.editing
+    }"
+    ng-repeat="collection in deployment.collections.models"
+    >
+    <form ng-submit="cancelEditingCollection(collection)">
+      <div
+        class="title"
+        ng-class="{clickable: !collection.editing}"
+        ng-click="toggle(!collection.editing ? collection : undefined)"
+        >
+        <div class="float-left">
+          <h4>
+            <span ng-show="!collection.editing">{{ collection.data.name }}</span>
+            <input
+              ng-show="collection.editing"
+              ng-model="collection.data.name"
+              ng-change="collection.save()"
+              placeholder="Title"
+              required
+              >
+            <small>
+              <span ng-show="!collection.editing">{{ collection.data.blurb }}</span>
+              <input
+                ng-show="collection.editing"
+                ng-model="collection.data.blurb"
+                ng-change="collection.save()"
+                placeholder="Blurb"
+                required
+                >
+            </small>
+          </h4>
+        </div>
+        <div class="float-right">
+          <div class="small-caps orange" ng-show="!collection.runs.length">
+            <h5>pending</h5>
+          </div>
+          <div ng-show="collection.runs.length">
+            <span ng-repeat="run in collection.runs">
+              {{ run.user.data.name }} -
+              <h5
+                class="inline-block small-caps"
+                ng-class="{
+                  'green': run.data.status == 'success',
+                  'orange': run.data.status == 'incomplete' || run.data.status == 'resolved',
+                  'red': run.data.status == 'failure'
+                }"
+                >{{ run.data.status }}
+              </h5>{{ $last ? '' : ', ' }}
+            </span>
+          </div>
+        </div>
+        <div class="clear"></div>
+      </div>
+      <div class="content" ng-show="collection.expanded">
+        <p>
+          <span ng-show="!collection.editing">{{ collection.data.description }}</span>
+          <textarea
+            ng-show="collection.editing"
+            ng-model="collection.data.description"
+            ng-change="collection.save()"
+            placeholder="Description"
+            required
+            ></textarea>
+        </p>
+        </span>
+        <div ng-repeat="story in collection.stories">
+          <span class="story">
+            <span ng-show="!collection.editing">{{ story.data.description }}</span>
+            <input
+              ng-show="collection.editing"
+              ng-model="story.data.description"
+              ng-change="story.save()"
+              placeholder="Description"
+              required
+              >
+            <button
+              type="button"
+              class="text black"
+              ng-show="collection.editing"
+              ng-click="newTarget(story)"
+              >
+              <i class="icon-plus"></i> Add A Target
+            </button>
+          </span>
+          <div ng-repeat="target in story.targets">
+            <span class="target">
+              <span ng-show="!collection.editing">{{ target.data.description }}</span>
+              <input
+                ng-show="collection.editing"
+                ng-model="target.data.description"
+                ng-change="target.save()"
+                placeholder="Description"
+                required
+                >
+            </span>
+            <span
+              class="badge"
+              ng-class="{
+                'green': result.data.status == 'success',
+                'orange': result.data.status == 'resolved',
+                'red': result.data.status == 'failure',
+                'clickable': result.actions.length
+              }"
+              ng-repeat="result in target.results"
+              ng-click="toggle(result)"
+              >
+              {{ result.step.run.user.name }}
+            </span>
+            <div
+              class="c_action status-{{ result.data.status }}"
+              ng-repeat="result in target.results"
+              ng-show="result.expanded && result.actions.length"
+              >
+              <div ng-repeat="action in result.actions">
+                <span ng-show="action.data.type == 'commented'">
+                  <span>{{ action.user.data.name }}</span> - {{ action.data.description }}
+                </span>
+                <span ng-show="action.data.type != 'commented'">
+                  <i>{{ action.user.data.name }} {{ action.data.type }} the ticket.</i>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button
+          type="button"
+          class="big story"
+          ng-show="collection.editing"
+          ng-click="newStory(collection)"
+          >
+          <i class="icon-plus"></i> Add A Story
+        </button>
+      </div>
+      <div class="actions">
+        <div ng-show="!collection.editing">
+          <button
+            type="button"
+            class="big orange raised action"
+            ng-click="editCollection(collection)"
+            >
+            <i class="icon-pencil"></i>
+          </button>
+          <button type="button" class="big teal raised action">
+            <i class="icon-play"></i>
+          </button>
+        </div>
+        <div ng-show="collection.editing">
+          <button class="big green raised action">
+            <i class="icon-save"></i>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div><!--
+--></div>
+<div ng-show="session.user.is_admin" class="main-actions">
+  <button class="big raised action teal" ng-click="newCollection()">
+    <i class="icon-plus"></i>
+  </button>
+</div>

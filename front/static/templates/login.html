@@ -1,0 +1,110 @@
+<div class="login-signup text-inverted">
+  <form ng-show="(form == 'login')" ng-submit="login()" class="login">
+    <p>Please log in:</p>
+    <input
+      placeholder="Email"
+      ng-model="user.data.email"
+      ng-class="{
+        invalid: form_errors.email,
+        valid: user.data.email && !form_errors.email
+      }"
+      ng-change="validate('email')"
+      >
+    <span
+      class="red validation"
+      ng-repeat="err in form_errors.email"
+      >{{ err }}</span>
+    <input
+      type="password"
+      placeholder="Password"
+      ng-model="user.data.password"
+      ng-class="{
+        invalid: form_errors.password,
+        valid: user.data.password && !form_errors.password
+      }"
+      ng-change="validate('password')"
+      >
+    <span
+      class="red validation"
+      ng-repeat="err in form_errors.password"
+      >{{ err }}</span>
+    <div class="buttons">
+      <button
+        type="button"
+        class="big white text"
+        ng-click="changeForm('signup')"
+        >
+        I need an account.
+      </button>
+      <button type="submit" class="big teal">Log In</button>
+    </div>
+  </form>
+
+  <form ng-show="(form == 'signup')" ng-submit="signup()">
+    <p>Please sign up:</p>
+    <input
+      placeholder="Email"
+      ng-model="user.data.email"
+      ng-class="{
+        invalid: form_errors.email,
+        valid: user.data.email && !form_errors.email
+      }"
+      ng-change="validate('email')"
+      >
+    <span
+      class="red validation"
+      ng-repeat="err in form_errors.email"
+      >{{ err }}</span>
+    <input
+      placeholder="Name"
+      ng-model="user.data.name"
+      ng-class="{
+        invalid: form_errors.name,
+        valid: user.data.name && !form_errors.name
+      }"
+      ng-change="validate('name')"
+      >
+    <span
+      class="red validation"
+      ng-repeat="err in form_errors.name"
+      >{{ err }}</span>
+    <input
+      type="password"
+      placeholder="Password"
+      ng-model="user.data.password"
+      ng-class="{
+        invalid: form_errors.password,
+        valid: user.data.password && !form_errors.password
+      }"
+      ng-change="validate('password')"
+      >
+    <span
+      class="red validation"
+      ng-repeat="err in form_errors.password"
+      >{{ err }}</span>
+    <input
+      type="password"
+      placeholder="Confirm Password"
+      ng-model="user.data.confirm"
+      ng-class="{
+        invalid: form_errors.confirm,
+        valid: user.data.confirm && !form_errors.confirm
+      }"
+      ng-change="validate('confirm')"
+      >
+    <span
+      class="red validation"
+      ng-repeat="err in form_errors.confirm"
+      >{{ err }}</span>
+    <div class="buttons">
+      <button
+        type="button"
+        class="big white text"
+        ng-click="changeForm('login')"
+        >
+        I already have an account.
+      </button>
+      <button type="submit" class="big red">Sign Up</button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,49 @@
+<!doctype html>
+
+<html lang="en" ng-app="app">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1">
+    <title>Testing scripts for your sanity</title>
+
+    <link rel="stylesheet" type="text/css" href="/style/main.css">
+    <link rel="stylesheet" type="text/css" href="/font/css/fable.css">
+    <link
+      href="http://fonts.googleapis.com/css?family=Open+Sans:400,500,400italic"
+      rel="stylesheet"
+      type="text/css"
+      >
+
+    <script src="/lib/angular.js"></script>
+    <script src="/lib/angular-route.js"></script>
+    <script src="/lib/moment.js"></script>
+
+    <script src="/config.js"></script>
+    <script src="/models.js"></script>
+    <script src="/controllers.js"></script>
+    <script src="/main.js"></script>
+  </head>
+  <body>
+    <header class="text-inverted {{ header_class }}">
+      <h2 class="float-left"><a href="/"><span class="teal">Fable</span> Testing</a></h2>
+      <div class="float-right" ng-show="session.data.user_id">
+        <p>{{ session.user.data.name }}</p>
+        <button class="big white text" ng-click="logout()">Log Out</button>
+      </div>
+      <div class="float-right" ng-show="!session.data.user_id">
+        <button
+          class="big white text"
+          onclick="location.href = (
+            '#/login?next=' + encodeURIComponent(location.hash)
+          );"
+          >Log In/Sign Up</button>
+      </div>
+      <div class="clear"></div>
+    </header>
+    <div ng-view ng-show="!error"></div>
+    <div ng-show="error" class="text-inverted error">
+      <h1>{{ error.status }} <small>{{ error.data.short || error.statusText }}</small></h1>
+      <p>{{ error.data.data }}</p>
+    </div>
+  </body>
+</html>
