@@ -2,10 +2,7 @@ angular.module('controllers', ['models'])
   .controller('LoginController', [
     '$rootScope', '$scope', '$routeParams',
     'session', 'error', 'models',
-    function(
-        $s_root, $s, $p,
-        session, error, M
-      ) {
+    function($s_root, $s, $p, session, error, M) {
       error.clear();
       session.load();
 
@@ -77,11 +74,7 @@ angular.module('controllers', ['models'])
     '$filter',
     '$rootScope', '$scope', '$routeParams',
     'session', 'error', 'models',
-    function(
-        $f,
-        $s_root, $s, $p,
-        session, error, M
-      ) {
+    function($f, $s_root, $s, $p, session, error, M) {
       error.clear();
       session.load();
 
@@ -145,11 +138,7 @@ angular.module('controllers', ['models'])
     '$filter', '$q',
     '$rootScope', '$scope', '$routeParams',
     'session', 'error', 'models',
-    function (
-        $f, $q,
-        $s_root, $s, $p,
-        session, error, M
-      ) {
+    function ($f, $q, $s_root, $s, $p, session, error, M) {
       error.clear();
       session.load();
       $s_root.header_class = 'under';
