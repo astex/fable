@@ -1,10 +1,8 @@
 angular.module('controllers', ['models'])
   .controller('LoginController', [
-    '$http',
     '$rootScope', '$scope', '$routeParams',
     'session', 'error', 'models',
     function(
-        $http,
         $s_root, $s, $p,
         session, error, M
       ) {
@@ -76,11 +74,11 @@ angular.module('controllers', ['models'])
     }
   ])
   .controller('CalendarController', [
-    '$http', '$filter',
+    '$filter',
     '$rootScope', '$scope', '$routeParams',
     'session', 'error', 'models',
     function(
-        $http, $f,
+        $f,
         $s_root, $s, $p,
         session, error, M
       ) {
@@ -144,11 +142,11 @@ angular.module('controllers', ['models'])
     }
   ])
   .controller('DeploymentController', [
-    '$http', '$filter', '$q',
+    '$filter', '$q',
     '$rootScope', '$scope', '$routeParams',
     'session', 'error', 'models',
     function (
-        $http, $f, $q,
+        $f, $q,
         $s_root, $s, $p,
         session, error, M
       ) {
