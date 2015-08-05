@@ -4,8 +4,8 @@ angular.module('tools', ['models'])
       $s_root.session = new M.Session();
       var session = {
         load: function() {
-          $s_root.session.fetch()
-            .then($s_root.session.fetchUser.bind($s_root.session));
+          return ($s_root.session.fetch()
+            .then($s_root.session.fetchUser.bind($s_root.session)));
         },
         logout: function() {
           return ($s_root.session.delete()
