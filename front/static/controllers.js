@@ -77,7 +77,7 @@ angular.module('controllers', ['models'])
     '$routeParams', '$rootScope', '$scope', '$http', '$filter',
     'session', 'error', 'models',
     function(
-        $p, $s_root, $s, $http, $filter,
+        $p, $s_root, $s, $http, $f,
         session, error, M
       ) {
       error.clear();
@@ -85,7 +85,7 @@ angular.module('controllers', ['models'])
 
       $s.moment = moment;
       $s_root.header_class = 'under';
-      var find = $s.find = $filter('find');
+      var find = $s.find = $f('find');
 
       $s.month = moment($p.year + '-' + $p.month, 'YYYY-MM');
       var start = $s.month.clone().startOf('month');
