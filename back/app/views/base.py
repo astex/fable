@@ -2,7 +2,7 @@ from werkzeug.exceptions import NotFound
 from flask import jsonify, request
 from flask.ext.classy import FlaskView
 from app.lib.database import db
-from app.permissions.user import admin_need
+from app.permissions.user import login_need, admin_need
 
 
 class View(FlaskView):
@@ -43,6 +43,14 @@ class RestView(View):
 
 class AdminChangeRestView(RestView):
     """A RestView that allows only admins to make changes."""
+    @login_need
+    def index(self):
+        return super(AdminChangeRestView, self).index()
+
+    @login_need
+    def get(self, id_):
+        return super(AdminChangeRestView, self).get(id_)
+
     @admin_need
     def post(self):
         return super(AdminChangeRestView, self).post()
