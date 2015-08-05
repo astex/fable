@@ -187,6 +187,7 @@ angular.module('controllers', ['models'])
               .save()
               .then(function() { location.href = getUrl(); });
           };
-        });
+        })
+        .catch(error.raise);
     }
   ]);
